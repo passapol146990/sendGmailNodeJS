@@ -3,6 +3,9 @@ const app = express();
 const nodemailer = require('nodemailer');
 const dotenv = require('dotenv');
 dotenv.config();
+
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 /*
     seting config .env
     {
@@ -21,9 +24,9 @@ const transporter = nodemailer.createTransport({
 /*
     POST request send email and toKen
 */
-app.get('/sendgmail', (req, res) => {
+app.post('/sendgmail', (req, res) => {
     try{
-        const gmail = "phasphlsuthathrrm976@gmail.com";
+        const gmail = req.body.gmail;
         const status = sendResetPasswordEmail(gmail);
         res.json(status);
     }catch{
